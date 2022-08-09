@@ -1,0 +1,17 @@
+# ignore direnv
+.direnv
+
+# ignore build harness
+*build-harness
+
+# ignore brewfile lock
+Brewfile.lock*
+
+# ignore env vars
+.vars
+
+# ignore .volumes dir
+.volumes
+
+# ignore src directory
+src
