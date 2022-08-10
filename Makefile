@@ -7,5 +7,10 @@ export PROJECT_ROOT ?= $(shell git rev-parse --show-toplevel)
 REPO_PATH ?= ./src
 
 ## initialize project and load dependencies
-bootstrap: init brew direnv manifest
+bootstrap: init brew direnv manifest cluster
 .PHONY: bootstrap
+
+## configure and create kubernetes cluster
+cluster:
+	./bin/cluster create
+.PHONY: cluster

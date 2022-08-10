@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+ACTION=${1:-"create"}
+# set max cores to count of available cores
+MAX_CORES=$(sysctl -n hw.ncpu)
+# set max ram to 75% of available memory
+MAX_RAM=$(( $(sysctl -n hw.memsize) / $((1024**3)) / 4 * 3 ))
+PROFILE=k8s-finbotsdev
+
+case $ACTION in
+  create)
+
+    minikube start \
+      --cpus="$MAX_CORES" \
+      --disk-size='100g' \
+      --driver='hyperkit' \
+      --kubernetes-version='stable' \
+      --memory="${MAX_RAM}g" \
+      --nodes=1 \
+      --profile="$PROFILE"
+
+    # running multiple nodes can have issues with pv permissions
+    # https://github.com/kubernetes/minikube/issues/12360
+    ;;
+  delete|destroy|ip|pause|ssh|start|stop|tunnel|unpause)
+    minikube "$ACTION" --profile="$PROFILE"
+    ;;
+  *)
+    echo "unrecognied action"
+    exit 0
+    ;;
+esac
