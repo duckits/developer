@@ -1,0 +1,17 @@
+---
+apiVersion: skaffold/v2beta21
+kind: Config
+metadata:
+  name: metrics-server
+deploy:
+  helm:
+    releases:
+      - createNamespace: true
+        name: metrics-server
+        namespace: kube-system
+        remoteChart: metrics-server
+        repo: https://kubernetes-sigs.github.io/metrics-server/
+        skipBuildDependencies: true
+        valuesFiles:
+          - overrides.yaml
+        version: 3.8.2
