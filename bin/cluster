@@ -7,6 +7,61 @@ MAX_CORES=$(sysctl -n hw.ncpu)
 MAX_RAM=$(( $(sysctl -n hw.memsize) / $((1024**3)) / 4 * 3 ))
 PROFILE=k8s-finbotsdev
 
+# tell dns resolver to use minikube as nameserver for any .lo domains
+function dnsresolver() {
+  sudo rm /etc/resolver/minikube-$PROFILE
+
+    cat << EOF | sudo tee -a /etc/resolver/minikube-$PROFILE
+domain lo
+nameserver $(minikube ip --profile=$PROFILE)
+search_order 1
+timeout 5
+EOF
+}
+
+# extend minikube dns config to forward dns requests for .lo domain to minikube ip address
+function dnsconfig() {
+    cat <<EOF | kubectl apply --filename -
+---
+apiVersion: v1
+data:
+  Corefile: |
+    .:53 {
+        errors
+        health {
+           lameduck 5s
+        }
+        ready
+        kubernetes cluster.local in-addr.arpa ip6.arpa {
+           pods insecure
+           fallthrough in-addr.arpa ip6.arpa
+           ttl 30
+        }
+        prometheus :9153
+        hosts {
+           192.168.64.1 host.minikube.internal
+           fallthrough
+        }
+        forward . /etc/resolv.conf {
+           max_concurrent 1000
+        }
+        cache 30
+        loop
+        reload
+        loadbalance
+    }
+    lo:53 {
+        errors
+        cache 30
+        forward . $(minikube ip --profile=$PROFILE)
+    }
+kind: ConfigMap
+metadata:
+  name: coredns
+  namespace: kube-system
+EOF
+}
+
 case $ACTION in
   create)
 
@@ -21,6 +76,29 @@ case $ACTION in
 
     # running multiple nodes can have issues with pv permissions
     # https://github.com/kubernetes/minikube/issues/12360
+
+    minikube addons enable ingress --profile="$PROFILE"
+    minikube addons enable ingress-dns --profile="$PROFILE"
+
+    dnsresolver
+
+    # reload resolver config
+    sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
+    sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
+
+    dnsconfig
+    ;;
+  dnstest)
+    # example deployment for hello john and hallo jane apps
+    kubectl apply --filename="${PROJECT_ROOT}/manifests/dns-resolver-test.yaml"
+
+    # test ns lookups directly to minikube
+    nslookup hello-john.lo $(minikube ip --profile=$PROFILE)
+    nslookup hello-jane.lo $(minikube ip --profile=$PROFILE)
+
+    # test ns lookups from host machine using curl
+    curl http://hello-john.lo
+    curl http://hello-jane.lo
     ;;
   delete|destroy|ip|pause|ssh|start|stop|tunnel|unpause)
     minikube "$ACTION" --profile="$PROFILE"
