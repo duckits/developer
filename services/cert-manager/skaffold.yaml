@@ -1,0 +1,36 @@
+---
+apiVersion: skaffold/v2beta21
+kind: Config
+metadata:
+  name: cert-manager
+deploy:
+  helm:
+    releases:
+      - createNamespace: true
+        name: cert-manager
+        namespace: cert-manager
+        remoteChart: cert-manager
+        repo: https://charts.jetstack.io
+        skipBuildDependencies: true
+        valuesFiles:
+          - overrides.yaml
+        version: 1.8.2
+    hooks:
+      after:
+        - host:
+            command:
+              [
+                "kubectl",
+                "apply",
+                "--filename",
+                "services/cert-manager/cluster-issuer.yaml",
+              ]
+      before:
+        - host:
+            command:
+              [
+                "kubectl",
+                "apply",
+                "--filename",
+                "services/cert-manager/cert-manager.crds.yaml",
+              ]

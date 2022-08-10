@@ -87,6 +87,12 @@ case $ACTION in
     sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.mDNSResponder.plist
 
     dnsconfig
+
+    # Create Private Certificate Signing Authority
+    "$HOME"/bin/ca
+
+    ## Install certificate manager
+    make -C "${PROJECT_ROOT}/services/cert-manager" deploy
     ;;
   dnstest)
     # example deployment for hello john and hallo jane apps
