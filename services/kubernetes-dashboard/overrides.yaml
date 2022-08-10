@@ -1,0 +1,23 @@
+extraArgs:
+  - --namespace=kubernetes-dashboard
+  - --enable-skip-login
+  - --enable-insecure-login
+  - --disable-settings-authorizer
+  - --system-banner="Welcome to Kubernetes MlOps"
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: opsbots
+  hosts:
+    - kubernetes-dashboard.lo
+  tls:
+    - secretName: kubernetes-dashboard-tls
+      hosts:
+        - kubernetes-dashboard.lo
+
+protocolHttp: true
+
+service:
+  type: NodePort
+  externalPort: 8443

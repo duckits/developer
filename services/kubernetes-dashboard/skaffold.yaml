@@ -1,0 +1,27 @@
+---
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: kubernetes-dashboard
+deploy:
+  helm:
+    releases:
+      - createNamespace: true
+        name: kubernetes-dashboard
+        namespace: kubernetes-dashboard
+        remoteChart: kubernetes-dashboard
+        repo: https://kubernetes.github.io/dashboard/
+        skipBuildDependencies: true
+        valuesFiles:
+          - overrides.yaml
+        version: 5.7.0
+    hooks:
+      after:
+        - host:
+            command:
+              [
+                "kubectl",
+                "apply",
+                "--filename",
+                "services/kubernetes-dashboard/sa-cluster-admin.yaml",
+              ]

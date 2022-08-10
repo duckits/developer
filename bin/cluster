@@ -98,6 +98,8 @@ case $ACTION in
     # Install metrics server
     make -C "${PROJECT_ROOT}/services/metrics-server" deploy
 
+    ## Install Kubernetes Dashboard
+    make -C "${PROJECT_ROOT}/services/kubernetes-dashboard" deploy
     ;;
   dnstest)
     # example deployment for hello john and hallo jane apps
@@ -110,6 +112,11 @@ case $ACTION in
     # test ns lookups from host machine using curl
     curl http://hello-john.lo
     curl http://hello-jane.lo
+    ;;
+  dashboard)
+    echo "use this token to access the dashboard"
+    kubectl -n kubernetes-dashboard create token dashboard-admin
+    open https://kubernetes-dashboard.lo/
     ;;
   delete|destroy|ip|pause|ssh|start|stop|tunnel|unpause)
     minikube "$ACTION" --profile="$PROFILE"
