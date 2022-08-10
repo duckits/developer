@@ -1,0 +1,17 @@
+---
+apiVersion: skaffold/v2beta21
+kind: Config
+metadata:
+  name: postgresql
+deploy:
+  helm:
+    releases:
+      - createNamespace: true
+        name: postgresql
+        namespace: postgresql
+        remoteChart: postgresql
+        repo: https://charts.bitnami.com/bitnami
+        skipBuildDependencies: true
+        valuesFiles:
+          - overrides.yaml
+        version: 11.6.7

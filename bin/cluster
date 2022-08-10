@@ -92,14 +92,18 @@ case $ACTION in
     # Create Private Certificate Signing Authority
     "$HOME"/bin/ca
 
-    ## Install certificate manager
+    # Install certificate manager
     make -C "${PROJECT_ROOT}/services/cert-manager" deploy
 
     # Install metrics server
     make -C "${PROJECT_ROOT}/services/metrics-server" deploy
 
-    ## Install Kubernetes Dashboard
+    # Install Kubernetes Dashboard
     make -C "${PROJECT_ROOT}/services/kubernetes-dashboard" deploy
+
+    # Install Postgres Database
+    make -C "${PROJECT_ROOT}/services/postgresql" deploy
+
     ;;
   dnstest)
     # example deployment for hello john and hallo jane apps

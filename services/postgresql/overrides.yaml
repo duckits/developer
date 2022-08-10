@@ -1,0 +1,6 @@
+auth:
+  existingSecret: postgresql
+
+primary:
+  initdb:
+    scriptsConfigMap: postgresql-init
