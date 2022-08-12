@@ -1,0 +1,17 @@
+---
+apiVersion: skaffold/v2beta21
+kind: Config
+metadata:
+  name: pgadmin4
+deploy:
+  helm:
+    releases:
+      - createNamespace: true
+        name: pgadmin4
+        namespace: pgadmin4
+        remoteChart: pgadmin4
+        repo: https://helm.runix.net
+        skipBuildDependencies: true
+        valuesFiles:
+          - overrides.yaml
+        version: 1.11.0

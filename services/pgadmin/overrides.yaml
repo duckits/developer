@@ -1,0 +1,45 @@
+env:
+  # can be email or nickname
+  email: dev@postgres.lo
+
+extraConfigmapMounts:
+  - name: pgadmin-config-local
+    configMap: pgadmin-config-local
+    mountPath: /pgadmin4/config_local.py
+    subPath: config_local.py
+    readOnly: true
+  - name: opsbot-ca-cert
+    configMap: opsbots-tls-ca
+    mountPath: /etc/ssl/certs/ca-certificates.crt
+    subPath: opsbot.pem
+    readOnly: false
+
+ingress:
+  annotations:
+    cert-manager.io/cluster-issuer: opsbots
+  enabled: true
+  hosts:
+    - host: pgadmin.lo
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - hosts:
+        - pgadmin.lo
+      secretName: pgadmin-local-tls
+
+service:
+  type: NodePort
+
+serverDefinitions:
+  enabled: true
+  servers:
+    firstServer:
+      Name: "Local Kubernetes Server"
+      Group: "Servers"
+      Port: 5432
+      Username: "postgres"
+      Host: "postgresql.postgresql.svc.cluster.local"
+      SSLMode: "prefer"
+      MaintenanceDB: "postgres"
+      Shared: true
