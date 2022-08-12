@@ -1,0 +1,30 @@
+auth:
+  createAdminUser: true
+  adminUser: root
+  adminPassword: p@s5w0rd
+
+debug:
+  enabled: true
+
+externalDatabase:
+  host: postgresql.postgresql.svc.cluster.local
+  port: 5432
+  user: keycloak
+  database: keycloak
+  password: p@s5w0rd
+
+image:
+  debug: true
+
+ingress:
+  annotations:
+    cert-manager.io/cluster-issuer: opsbots
+  enabled: true
+  hostname: keycloak.lo
+  tls: true
+
+postgresql:
+  enabled: false
+
+service:
+  type: NodePort

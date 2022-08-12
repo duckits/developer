@@ -104,18 +104,8 @@ case $ACTION in
     # Install Postgres Database
     make -C "${PROJECT_ROOT}/services/postgresql" deploy
 
-    # Install Keycloak Operator
-    kubectl create ns keycloak-operator
-    kubectl apply -f manifests/keycloak-operator/keycloaks.k8s.keycloak.org-v1.yml
-    kubectl apply -f manifests/keycloak-operator/keycloakrealmimports.k8s.keycloak.org-v1.yml
-    kubectl apply -n keycloak-operator -f manifests/keycloak-operator/operator.yaml
-
-    kubectl create secret generic keycloak-db-secret \
-      --from-literal=username=keycloak \
-      --from-literal=password=p@s5w0rd \
-      -n keycloak-operator
-
-    kubectl apply -n keycloak-operator -f manifests/keycloak-operator/keycloak.yaml
+    # Install Keycloak
+    make -C "${PROJECT_ROOT}/services/keycloak" deploy
     ;;
   dnstest)
     # example deployment for hello john and hallo jane apps
