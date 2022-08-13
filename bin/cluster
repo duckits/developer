@@ -104,6 +104,8 @@ case $ACTION in
     # Install Postgres Database
     make -C "${PROJECT_ROOT}/services/postgresql" deploy
 
+    # Install Keycloak
+    kubectl apply -f manifests/keycloak/deployment.yaml
     ;;
   dnstest)
     # example deployment for hello john and hallo jane apps
