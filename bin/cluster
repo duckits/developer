@@ -72,6 +72,7 @@ case $ACTION in
       --driver='hyperkit' \
       --kubernetes-version='stable' \
       --memory="${MAX_RAM}g" \
+      --mount true --mount-string='/Users:/host' \
       --nodes=1 \
       --profile="$PROFILE"
 
@@ -109,6 +110,9 @@ case $ACTION in
 
     # Install PGAdmin
     make -C "${PROJECT_ROOT}/services/pgadmin" deploy
+
+    # Install Minio
+    make -C "${PROJECT_ROOT}/services/minio" deploy
     ;;
   dnstest)
     # example deployment for hello john and hallo jane apps

@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: minio
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 500Gi
+  hostPath:
+    path: /host/russellsherman/src/github.com/finbotsdev/developer/src/minio/data
+
+# minio can't write files to this volume
+# Error: Rename across devices not allowed, please fix your backend configuration
+# issue reference suggests a fix
+# https://github.com/minio/minio/issues/7013
+# but in this context i think minio is being started in the suggested way
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: minio
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: "" # Empty string must be explicitly set otherwise default StorageClass will be set
+  volumeName: minio
