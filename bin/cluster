@@ -113,6 +113,10 @@ case $ACTION in
 
     # Install Minio
     make -C "${PROJECT_ROOT}/services/minio" deploy
+
+    # Install Jupyterhub
+    make -C "${PROJECT_ROOT}/services/jupyterhub" deploy
+
     ;;
   dnstest)
     # example deployment for hello john and hallo jane apps

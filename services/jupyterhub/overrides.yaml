@@ -1,0 +1,73 @@
+hub:
+  config:
+    Authenticator:
+      auto_login: true
+      enable_auth_state: true
+
+    GenericOAuthenticator:
+      client_id: jhub
+      client_secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      oauth_callback_url: https://jupyterhub.lo/hub/oauth_callback
+      authorize_url: https://keycloak.lo/realms/master/protocol/openid-connect/auth
+      token_url: https://keycloak.lo/realms/master/protocol/openid-connect/token
+      userdata_url: https://keycloak.lo/realms/master/protocol/openid-connect/userinfo
+      login_service: keycloak
+      username_key: preferred_username
+      userdata_params:
+        state: state
+
+    JupyterHub:
+      authenticator_class: generic-oauth
+
+  extraEnv:
+    - name: OAUTH2_TLS_VERIFY
+      value: "0"
+    - name: OAUTH2_AUTHORIZE_URL
+      value: http://keycloak.lo/realms/master/protocol/openid-connect/auth
+    - name: OAUTH2_TOKEN_URL
+      value: http://keycloak.lo/realms/master/protocol/openid-connect/token
+
+ingress:
+  annotations:
+    cert-manager.io/cluster-issuer: opsbots
+  enabled: true
+  hosts:
+    - jupyterhub.lo
+  tls:
+    - hosts:
+        - jupyterhub.local
+      secretName: jupyterhub-local-tls
+
+proxy:
+  service:
+    type: NodePort
+
+singleuser:
+  image:
+    name: finbotsdev/datascience-notebook
+    tag: 466ee95
+  extraEnv:
+    MINIO_ACCESS_KEY:
+      name: MINIO_ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: minio
+          key: accesskey
+    MINIO_SECRET_KEY:
+      name: MINIO_SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: minio
+          key: secretkey
+    OANDA_API_KEY:
+      name: OANDA_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: oanda
+          key: api-key
+    POSTGRES_PASSWORD:
+      name: POSTGRES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgresql
+          key: postgres-password

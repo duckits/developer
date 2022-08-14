@@ -8,3 +8,5 @@ export PATH=./bin:./build-harness/bin:./build-harness/vendor:$PATH
 export REPO_PATH=./src
 
 export POSTGRES_PASSWORD=SuperSecretPassword
+
+export OANDA_API_KEY=xxxxxxxxxxxxxxxxxxxxxxx

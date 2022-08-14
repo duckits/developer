@@ -1,0 +1,26 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jupyter-user
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /host/russellsherman/src/github.com/finbotsdev/developer/src/notebooks
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim-user
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: "" # Empty string must be explicitly set otherwise default StorageClass will be set
+  volumeName: jupyter-user
