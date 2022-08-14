@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gcloud
+spec:
+  containers:
+    - command:
+        - sleep
+        - "3600"
+      image: google/cloud-sdk:alpine
+      imagePullPolicy: IfNotPresent
+      name: gcloud
+  restartPolicy: Always

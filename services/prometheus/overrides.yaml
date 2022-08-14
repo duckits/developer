@@ -1,0 +1,12 @@
+alertmanager:
+  enabled: false
+
+# understand why/how and should we install seperately?
+kubeStateMetrics:
+  enabled: false
+
+nodeExporter:
+  enabled: false
+
+pushgateway:
+  enabled: false

@@ -139,3 +139,18 @@ case $ACTION in
     exit 0
     ;;
 esac
+
+# ## Install simple nginx app
+# kubectl apply --filename=./manifests/nginx.yaml
+
+# ## install operator lifecycle manager
+# kubectl apply --filename="${PROJECT_ROOT}/manifests/operator-lifecycle-manager/v0.20.0/crds.yaml"
+# kubectl apply --filename="${PROJECT_ROOT}/manifests/operator-lifecycle-manager/v0.20.0/olm.yaml"
+
+# ## Register RedHat Community Operators Source repo
+# kubectl apply --filename=manifests/open-data-hub/catalog-source.yaml
+# kubectl apply --filename=manifests/open-data-hub/odh-subscription.yaml
+
+# ## create ml-workshop
+# kubectl create ns ml-workshop
+# kubectl apply --filename=manifests/ml-platform/ml-platform.yaml --namespace ml-workshop

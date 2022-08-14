@@ -1,0 +1,13 @@
+server:
+  service:
+    type: NodePort
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: opsbots
+    enabled: true
+    hosts:
+      - argocd.lo
+    tls:
+      - secretName: argocd-local-tls
+        hosts:
+          - argocd.lo

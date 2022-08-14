@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: awscli
+spec:
+  containers:
+    - command:
+        - sleep
+        - "3600"
+      image: amazon/aws-cli:latest
+      imagePullPolicy: IfNotPresent
+      name: awscli
+  restartPolicy: Always

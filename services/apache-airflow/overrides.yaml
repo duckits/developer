@@ -1,0 +1,45 @@
+# Airflow database & redis config
+data:
+  metadataConnection:
+    user: airflow
+    pass: p@s5w0rd
+    protocol: postgresql
+    host: postgresql.postgresql
+    port: 5432
+    db: airflow
+    sslmode: prefer
+
+ingress:
+  flower:
+    annotations:
+      cert-manager.io/cluster-issuer: opsbots
+    enabled: true
+    hosts:
+      - name: flower.lo
+        tls:
+          enabled: true
+          secretName: flower-lo-tls
+  web:
+    annotations:
+      cert-manager.io/cluster-issuer: opsbots
+    enabled: true
+    hosts:
+      - name: airflow.lo
+        tls:
+          enabled: true
+          secretName: airflow-lo-tls
+
+postgresql:
+  enabled: false
+
+webserver:
+  defaultUser:
+    enabled: true
+    role: Admin
+    username: admin
+    email: admin@airflow.lo
+    firstName: admin
+    lastName: user
+    password: p@s5w0rd
+  service:
+    type: NodePort

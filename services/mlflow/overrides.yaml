@@ -1,0 +1,10 @@
+mlflow:
+  replicas: 1
+  # s3:
+  #   path: "s3://mlflow"
+  database:
+    name: mlflow
+    password: p@s5w0rd
+    username: mlflow
+    hostname: postgresql.postgresql.svc.cluster.local
+    port: 5432
