@@ -1,2 +1,6 @@
-git@github.com:finbotsdev/datascience-notebooks.git datascience-notebooks
+git@github.com:finbotsdev/datascience-notebooks.git datascience-notebook
 git@github.com:finbotsdev/notebooks.git notebooks
+git@github.com:finbotsdev/pytrader.git pytrader
+https://github.com/freqtrade/freqtrade reference/freqtrade
+https://github.com/freqtrade/freqtrade-strategies reference/freqtrade-strategies
+https://github.com/derekbanas/Python4Finance reference/Python4Finance
