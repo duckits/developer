@@ -59,12 +59,24 @@ singleuser:
         secretKeyRef:
           name: minio
           key: secretkey
+    OANDA_ACCOUNT_ID:
+      name: OANDA_ACCOUNT_ID
+      valueFrom:
+        secretKeyRef:
+          name: oanda
+          key: account-id
     OANDA_API_KEY:
       name: OANDA_API_KEY
       valueFrom:
         secretKeyRef:
           name: oanda
           key: api-key
+    OANDA_API_URL:
+      name: OANDA_API_URL
+      valueFrom:
+        secretKeyRef:
+          name: oanda
+          key: api-url
     POSTGRES_PASSWORD:
       name: POSTGRES_PASSWORD
       valueFrom:
