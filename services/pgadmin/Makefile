@@ -9,9 +9,9 @@ export VERSION = 1.11.0
 include ../Makefile
 
 preinstall:
-	kubectl create ns $(NAMESPACE)
-	kubectl create configmap opsbots-tls-ca \
-				--from-file=opsbot.pem=$(HOME)/.certs/cacert.pem \
-				--namespace $(NAMESPACE)
+	-kubectl create ns $(NAMESPACE)
+	-kubectl create configmap opsbots-tls-ca \
+		--from-file=opsbot.pem=$(HOME)/.certs/cacert.pem \
+		--namespace $(NAMESPACE)
 	kubectl apply -f configmap.yaml --namespace $(NAMESPACE)
 _PHONY: preinstall
