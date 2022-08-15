@@ -54,3 +54,6 @@ ingress:
     - hosts:
         - grafana.lo
       secretName: grafana-tls
+
+persistence:
+  enabled: true
