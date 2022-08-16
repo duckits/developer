@@ -1,0 +1,17 @@
+secrets:
+  credentialsSecretName: "timescaledb-single-credentials"
+
+persistentVolumes:
+  data:
+    enabled: true
+    size: 50Gi
+  wal:
+    enabled: true
+    size: 10Gi
+
+postInit:
+  - configMap:
+      name: postgresql-init
+      optional: true
+
+replicaCount: 1
