@@ -35,7 +35,7 @@ ingress:
     - jupyterhub.lo
   tls:
     - hosts:
-        - jupyterhub.local
+        - jupyterhub.lo
       secretName: jupyterhub-local-tls
 
 proxy:
