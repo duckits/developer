@@ -95,25 +95,26 @@ case $ACTION in
 
     # Install certificate manager
     make -C "${PROJECT_ROOT}/services/cert-manager" deploy
-
     # Install metrics server
     make -C "${PROJECT_ROOT}/services/metrics-server" deploy
-
     # Install Kubernetes Dashboard
     make -C "${PROJECT_ROOT}/services/kubernetes-dashboard" deploy
-
     # Install Postgres Database
     make -C "${PROJECT_ROOT}/services/postgresql" deploy
-
+    # Install Timescale Database
+    make -C "${PROJECT_ROOT}/services/timescaledb" deploy
     # Install Keycloak
     make -C "${PROJECT_ROOT}/services/keycloak" deploy
-
     # Install PGAdmin
     make -C "${PROJECT_ROOT}/services/pgadmin" deploy
-
+    # Install Prometheus
+    make -C "${PROJECT_ROOT}/services/prometheus" deploy
+    # Install Loki
+    make -C "${PROJECT_ROOT}/services/loki" deploy
+    # Install Grafana
+    make -C "${PROJECT_ROOT}/services/grafana" deploy
     # Install Minio
     make -C "${PROJECT_ROOT}/services/minio" deploy
-
     # Install Jupyterhub
     make -C "${PROJECT_ROOT}/services/jupyterhub" deploy
 
