@@ -4,7 +4,7 @@ secrets:
 persistentVolumes:
   data:
     enabled: true
-    size: 50Gi
+    size: 250Gi
   wal:
     enabled: true
     size: 10Gi
