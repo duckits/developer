@@ -1,14 +1,26 @@
 #!/usr/bin/env bash
 
+# IEX api
+export IEX_API_KEY_ID=Tpk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+export IEX_API_SECRET_KEY=Tsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+export IEX_API_DATA_URL=https://sandbox.iexapis.com
+export IEX_API_VERSION=v1
+
+# Oanda API
+export OANDA_ACCOUNT_ID=xxxxxxxxxxxxxxxxxxxxxxx
+export OANDA_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+export OANDA_API_URL=https://api-fxpractice.oanda.com/v3
+
 # add ./build-harness/vendor to path
 export PATH=./bin:./build-harness/bin:./build-harness/vendor:$PATH
+
+export POSTGRES_PASSWORD=SuperSecretPassword
 
 # the path specified by REPO_PATH is there we will clone the
 # source repositories specified in .repo-manifest
 export REPO_PATH=./src
 
-export POSTGRES_PASSWORD=SuperSecretPassword
-
-export OANDA_ACCOUNT_ID=xxxxxxxxxxxxxxxxxxxxxxx
-export OANDA_API_KEY=xxxxxxxxxxxxxxxxxxxxxxx
-export OANDA_API_URL=xxxxxxxxxxxxxxxxxxxxxxx
+# Twelvedata API
+export TWELVEDATA_API_KEY=xxxxxxxxxxxxxxxxxxxxxxx
+export TWELVEDATA_API_URL=https://api.twelvedata.com
+export TWELVEDATA_STREAM_URL=https://ws.twelvedata.com
