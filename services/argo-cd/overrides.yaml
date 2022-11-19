@@ -1,4 +1,6 @@
 server:
+  extraArgs:
+    - --insecure
   service:
     type: NodePort
   ingress:
@@ -6,8 +8,8 @@ server:
       cert-manager.io/cluster-issuer: opsbots
     enabled: true
     hosts:
-      - argocd.lo
+      - argo-cd.lo
     tls:
       - secretName: argocd-local-tls
         hosts:
-          - argocd.lo
+          - argo-cd.lo

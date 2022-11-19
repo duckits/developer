@@ -7,7 +7,9 @@ export PROJECT_ROOT ?= $(shell git rev-parse --show-toplevel)
 REPO_PATH ?= ./src
 
 ## initialize project and load dependencies
-bootstrap: init brew direnv manifest cluster
+bootstrap: #init brew .vars
+	@for f in $(shell ls -d services/*); do echo "$$f ..."; make -C $$f; done
+
 .PHONY: bootstrap
 
 ## configure and create kubernetes cluster

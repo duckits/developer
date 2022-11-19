@@ -2,7 +2,7 @@ export K8S_CTX ?= $(shell kubectl config current-context)
 
 .DEFAULT_GOAL := bootstrap
 
-bootstrap: deps search values
+bootstrap: deps search values pull
 _PHONY: bootstrap
 
 deploy: deps preinstall install postinstall
